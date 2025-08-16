@@ -121,6 +121,7 @@
   constexpr int interval_show = 25;
   constexpr int interval_col_btn = 6;
   bool idle_b = false;
+  bool touched_b = false;
   bool ledState = LOW;
   int loop_counter = 0;
   long loop_timer = 0;
@@ -265,6 +266,7 @@
         encoderChanged[row][1] = false;
         since_last_touch = millis();
         idle_b = false;
+        touched_b = true;
         uint16_t gpio = mcp[row].readGPIOAB();  //alle pins vom mcp auslesen
 
         for (uint8_t enc_i = 0; enc_i < ENC_PER_CHIP; ++enc_i) {
@@ -331,6 +333,7 @@
           button_changed[1][0] = false;
           since_last_touch = millis();
           idle_b = false;
+          touched_b = true;
           // Einmal den ganzen 16-Bit Port lesen, dann pro Taste auswerten
           uint16_t gpio = mcp[4].readGPIOAB();
           for (int enc_i = 0; enc_i < 8; enc_i++) {
@@ -363,6 +366,7 @@
           button_changed[2][0] = false;
           since_last_touch = millis();
           idle_b = false;
+          touched_b = true;
           uint16_t gpio = mcp[5].readGPIOAB();
           for (int enc_i = 0; enc_i < 8; enc_i++) {
             bool currentbtn = bitRead(gpio, enc_but_pins_5[enc_i]);  // 0..7
@@ -393,6 +397,7 @@
           button_changed[3][0] = false;
           since_last_touch = millis();
           idle_b = false;
+          touched_b = true;
           uint16_t gpio = mcp[5].readGPIOAB();
           for (uint8_t enc_i = 8; enc_i < 16; enc_i++) {
             bool currentbtn = bitRead(gpio, enc_but_pins_5[enc_i]);  // 8..15
@@ -429,6 +434,7 @@
       rubber_button_changed[pcb][1] = false;
       since_last_touch = millis();
       idle_b = false;
+      touched_b = true;
 
       debounce_snap1[pcb] = mcp[chip].readGPIOAB();  // erste Probe
       debounce_due[pcb] = millis() + DEBOUNCE_MS;    // Zeitpunkt für Recheck
@@ -483,6 +489,7 @@
       nav_changed = false;
       since_last_touch = millis();
       idle_b = false;
+      touched_b = true;
       debounce_snap1[pcb] = mcp[chip].readGPIOAB();  // erste Probe                           
       debounce_due[pcb] = millis() + DEBOUNCE_MS;    // Zeitpunkt für Recheck
       debounce_pending[pcb] = true;                  // Recheck aktivieren
@@ -628,7 +635,7 @@
       }
       out[pos] = val;
     }
-  }    
+  }     
   void handleReceivedTinyIRData(uint16_t aAddress, uint8_t aCommand, bool isRepeat) {
     /*
       Serial.print(F("A=0x"));
@@ -642,20 +649,20 @@
     IR_aAddress = aAddress;
     IR_aCommand = aCommand;
     IR_isRepeat = isRepeat;
-    if (IR_aCommand == 0x1 && !isRepeat && digitalReadFast(5)) {//1TV
+    if (IR_aCommand == 0x1 && !isRepeat) {//1TV
       main_mode = 0;
       enc_mode = 0;
       since_last_touch = millis();
       idle_b = false;
+      touched_b = true;
       draw_enc_setup(enc_mode, color_main, color_back);
       CHANNEL_switch = cs::Channel{ enc_mode };
       haptic_play(86);
     } 
-    else if (IR_aCommand == 0x4 && !isRepeat) {//2TV
+    else if (IR_aCommand == 0x4 && !isRepeat  && digitalReadFast(5)) {//2TV
       main_mode = 1;
       since_last_touch = millis();
-      idle_b = false;
-      idleTwinklesReset();
+      idle_b = false;      
       haptic_play(86);
     } 
     else if (IR_aCommand == 0xD && !isRepeat) {//4TV
@@ -663,6 +670,7 @@
       since_last_touch = millis();
       idle_b = false;
       idleTwinklesReset();
+      touched_b = false;
       haptic_play(86);
     } 
     else if (IR_aCommand == 0x1A && !isRepeat) {//UTV    
@@ -907,9 +915,9 @@
       delay(10);
       led_enc.show();
     }
-    draw_enc_setup(enc_mode, color_main, color_back);
+    draw_enc_setup(0, color_main, color_back);
     enc_dirty = true;
-    led_enc.show();
+    
   }
   void rainbow() {
     for (int i = 0; i < 96; i++) {
@@ -2157,7 +2165,6 @@
     seedRNG();
     delta_var=1;
     enc_mode = 0;
-
     color_calc();
     clearAll();
     led_enc.begin();
@@ -2199,11 +2206,36 @@
     Serial.println("MIDI ready");
     welcome_led();
     Serial.println("Start Loop");
+
+    update_my();
+    main_mode = 3;
+    since_last_touch = millis();
+    idle_b = false;
+    idle_b_prev = true;
+    touched_b = false;
+    idleTwinklesReset();
+    haptic_play(86);
   }
 
 
-
 // -------------------- LOOP ------------------------------------------------------------------------------------------------
+
+  void jump_back(){
+    encoder_handle();
+    encoder_button_handle();
+    handle_rest();
+    if(touched_b){
+      touched_b = false;
+      main_mode = 0;
+      since_last_led      = 0;
+      since_last_counter  = 0;
+      since_idle          = 0;
+      since_idle_tw       = 0;
+      haptic_play(52);
+      haptic_play(52);
+      draw_enc_setup(enc_mode, color_main, color_back);
+    }
+  } 
 
   void loop() {
     // put your main code here, to run repeatedly:
@@ -2218,25 +2250,10 @@
       encoder_button_handle();
       handle_rest();
       if(idle_b){
-        runIdleTwinkles();
-        color_shift_rain++; 
-        rainbow();
-        led_eb.show();
-        led_enc.show();
+        main_mode = 2;
       }
       else{
-        if(idle_b_prev == true){
-          idle_b_prev = false;
-          since_last_led      = 0;
-          since_last_counter  = 0;
-          since_idle          = 0;
-          since_idle_tw       = 0;
-          haptic_play(52);
-          draw_enc_setup(enc_mode, color_main, color_back);
-        }
-        else{
-          update_my();
-        }        
+        update_my();    
       }
       midi.update();
     } 
@@ -2246,6 +2263,7 @@
       color_shift_rain++; 
       rainbow();
       led_eb.show();
+      jump_back();
     }
     else if (main_mode == 2) {
       //led show
@@ -2254,6 +2272,7 @@
       rainbow();
       led_eb.show();
       led_enc.show();
+      jump_back();
     }
     else if (main_mode == 3)  {
       //led show
@@ -2261,8 +2280,8 @@
       runIdleStarlight();
       rainbow();
       led_eb.show();
+      jump_back();
     }
-
   }
 
 
