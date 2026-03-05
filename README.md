@@ -3,11 +3,9 @@
 <picture>
   <img alt="LightPad_Logo" src="Media/Logo.png" width="100%" height="100%">
 </picture>
+
+A DIY MIDI Controller to use with the Midi2LR Plugin
 </div>
-
-
-LightPad: my trusty DIY Midi Controller for Lightroom picture editing
-
 
 
 <br>
