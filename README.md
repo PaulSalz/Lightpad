@@ -1,7 +1,7 @@
 <div align="center">
 
 <picture>
-  <img alt="LightPad_Logo" src="media/logo.png" width="15%" height="15%">
+  <img alt="LightPad_Logo" src="Media/Logo.png" width="15%" height="15%">
 </picture>
 
 
