@@ -2110,11 +2110,8 @@
 // -------------------- MIDI-STUFF ------------------------------------------------------------------------------------------
 
   static inline uint8_t channelToMode(cs::Channel ch) {
-    // In neueren Control_Surface-Versionen:
-    uint8_t raw = ch.getRaw();   // ergibt 1..16
-    // Falls getRaw() bei deiner Version nicht existiert,
-    // nimm stattdessen:  uint8_t raw = static_cast<uint8_t>(ch);
-    return raw; //? (raw - 1) : 0;  // 1→0, 2→1, ..., 16→15
+    uint8_t raw = ch.getRaw();
+    return raw; 
   }
 
   struct MyMIDI_Callbacks : MIDI_Callbacks {
@@ -2140,12 +2137,6 @@
           counter[enc_channel][row][enc] = 4 * velocity;         // jetzt klar "welcher" counter
         }
       }
-
-      /*
-        if (note == 60) {//alt
-        counter_nav = velocity;
-        sth_changed = true;
-      }*/
       //Serial << type << ": " << chanel << ", Note " << note << ", Velocity " << velocity << ", counter[row][enc]: " << counter[enc_channel][row][enc] << ", mode: " << enc_channel << endl;
     }
   } callback;  // Instantiate a callback
