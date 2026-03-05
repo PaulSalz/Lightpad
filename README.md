@@ -8,6 +8,7 @@
 LightPad: my trusty DIY Midi Controller for Lightroom picture editing
 <h3>
 
+</div>
 <br>
 
 # Main features
