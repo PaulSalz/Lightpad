@@ -1,6 +1,6 @@
 <div align="center">
 <p align="center">
-  <h1 align="center">LightPad</h1>
+  <h3 align="center">LightPad</h3>
 </p>
 <picture>
   <img alt="LightPad_Logo" src="Media/Logo.png" width="100%" height="100%">
