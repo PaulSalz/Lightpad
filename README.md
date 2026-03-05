@@ -8,6 +8,8 @@
 LightPad: my trusty DIY Midi Controller for Lightroom picture editing
 <h3>
 
+<br>
+
 # Main features
 
 - **[24 Encoders]()**  
@@ -27,10 +29,13 @@ LightPad: my trusty DIY Midi Controller for Lightroom picture editing
 - **[External Power]()**  
   ...  
 
+<br>
+
 ## Some background
 
 LightPad 
 Hello World!
 
+<br>
 
 <a href="https://www.buymeacoffee.com/PaulSalz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
