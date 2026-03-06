@@ -6,9 +6,11 @@ DIY MIDI Controller to use with the Midi2LR Plugin
 <img alt="LightPad_Logo" src="Media/Logo.png" width="100%" height="100%">
 </picture>
 </div>
-
-
 <br>
+
+<picture>
+<img src="Media/animations.gif" width="100%" height="100%">
+</picture>
 
 # Main features
 - **[24x Interrupt-Driven Encoders](https://github.com/PaulSalz/lightpad/blob/main/Media/test_enc_led.jpg)**  
@@ -49,6 +51,9 @@ DIY MIDI Controller to use with the Midi2LR Plugin
 <picture>
 <img  src="Media/usecase.jpg" width="100%" height="100%">
 </picture>
+<picture>
+<img  src="Media/main_modes.gif" width="100%" height="100%">
+</picture>
      
 </div>
 <br>
@@ -78,6 +83,7 @@ DIY MIDI Controller to use with the Midi2LR Plugin
      
 </div>
 <br>
+
 
 
 
