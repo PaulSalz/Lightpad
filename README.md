@@ -1,11 +1,10 @@
 <div align="center">
-<h1 align="center"><b>LightPad</b></h1>
-DIY MIDI Controller to use with the Midi2LR Plugin
-<picture>
-  <img alt="LightPad_Logo" src="Media/Logo.png" width="100%" height="100%">
-</picture>
+    <h1 align="center"><b>LightPad</b></h1>
+    DIY MIDI Controller to use with the Midi2LR Plugin
 
-
+    <picture>
+    <img alt="LightPad_Logo" src="Media/Logo.png" width="100%" height="100%">
+    </picture>
 </div>
 
 
@@ -14,10 +13,10 @@ DIY MIDI Controller to use with the Midi2LR Plugin
 # Main features
 
 - **[24 Encoders]()**  
-  24- RGB Illuminated Push-Button Encoders for fine adjustments
-- **[4x4 Button Pad]()**  
+  3x8 RGB Illuminated Push-Button Encoders for fine adjustments
+- **[4x4 Button Matrix]()**  
   ...
-- **[Media Pad]()**  
+- **[Media/ Culling Pad]()**  
   ...  
 - **[Force Feedback]()**  
   ...  
@@ -38,5 +37,3 @@ LightPad
 Hello World!
 
 <br>
-
-<a href="https://www.buymeacoffee.com/PaulSalz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
