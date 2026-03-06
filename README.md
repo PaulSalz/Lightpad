@@ -1,10 +1,10 @@
 <div align="center">
-    <h1 align="center"><b>LightPad</b></h1>
-    DIY MIDI Controller to use with the Midi2LR Plugin
+<h1 align="center"><b>LightPad</b></h1>
+DIY MIDI Controller to use with the Midi2LR Plugin
 
-    <picture>
-    <img alt="LightPad_Logo" src="Media/Logo.png" width="100%" height="100%">
-    </picture>
+<picture>
+<img alt="LightPad_Logo" src="Media/Logo.png" width="100%" height="100%">
+</picture>
 </div>
 
 
@@ -36,4 +36,3 @@
 LightPad 
 Hello World!
 
-<br>
